@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"?
+<META name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine ❤️</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:linear-gradient(135deg,#ff4b7d,#ff85a2);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial;
+    overflow:hidden;
+}
+
+/* Soft glowing background */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle, rgba(255,255,255,0.2), transparent 70%);
+    animation:pulse 4s infinite alternate;
+}
+
+@keyframes pulse{
+    from{opacity:0.3;}
+    to{opacity:0.8;}
+}
+
+.container{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    width:90%;
+    max-width:350px;
+    box-shadow:0 0 30px rgba(255,0,100,0.5);
+    z-index:10;
+    position:relative;
+    animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+    from{box-shadow:0 0 20px #ff4b7d;}
+    to{box-shadow:0 0 40px #ff85a2;}
+}
+
+button{
+    padding:12px 22px;
+    font-size:16px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    margin:10px;
+}
+
+#yesBtn{
+    background:#ff3366;
+    color:white;
+}
+
+#noBtn{
+    background:#555;
+    color:white;
+}
+
+/* Floating hearts */
+.heart{
+    position:fixed;
+    bottom:-40px;
+    font-size:24px;
+    animation:floatUp 6s linear forwards;
+    pointer-events:none;
+}
+
+@keyframes floatUp{
+    0%{
+        transform:translateY(0) scale(0.5);
+        opacity:0;
+    }
+    10%{opacity:1;}
+    100%{
+        transform:translateY(-120vh) scale(1.5);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="box">
+
+<h2>💖 Hitu Will you be my Valentine once again? 💖</h2>
+<h2>💖 Try No if you can? 💖</h2>
+
+<button id="yesBtn">Yes 😍</button>
+<button id="noBtn">No 😢</button>
+
+</div>
+
+
+<script>
+
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const box = document.getElementById("box");
+
+/* No button runs away */
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+function moveNo(){
+    let x = Math.random() * (window.innerWidth-120);
+    let y = Math.random() * (window.innerHeight-80);
+
+    noBtn.style.position="fixed";
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+}
+
+/* Romantic music (Song 8) */
+const loveMusic = new Audio(
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+);
+loveMusic.loop = true;
+loveMusic.volume = 0.7;
+
+/* Create hearts */
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+
+    const hearts = ["❤️","💖","💘","💕","💞"];
+    heart.innerHTML = hearts[Math.floor(Math.random()*hearts.length)];
+
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.fontSize = (18 + Math.random()*40) + "px";
+    heart.style.animationDuration = (4 + Math.random()*4) + "s";
+
+    document.body.appendChild(heart);
+    setTimeout(()=> heart.remove(), 8000);
+}
+
+let heartInterval;
+
+/* YES → Start Magic */
+yesBtn.addEventListener("click", ()=>{
+
+    // Play romantic music
+    loveMusic.play();
+
+    // Start continuous hearts
+    heartInterval = setInterval(createHeart, 200);
+
+    // Show message
+    box.innerHTML = `
+      <h2>🥰 Yay! Hitu, I Love You 💖</h2>
+      <p>💞 Forever & Always 💞</p>
+    `;
+});
+
+</script>
+
+</body>
+</html>
+s
